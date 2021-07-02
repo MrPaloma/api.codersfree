@@ -4,13 +4,29 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\ApiTrait;
 
 class Post extends Model
 {
-    use HasFactory;
+    use HasFactory, ApiTrait;
+
+    protected $fillable = [
+        'name',
+        'slug',
+        'extract',
+        'body',
+        'status',
+        'user_id',
+        'category_id'
+    ];
 
     const BORRADOR = 1;
     const PUBLICADO = 2;
+
+    // Lista blanca para incluir en la url
+    protected $allowIncluded = ['user', 'category'];
+    protected $allowFilter = ['id', 'name', 'slug'];
+    protected $allowSort = ['id', 'name', 'slug']; 
 
     // Relacion uno a muchos inversa
     public function user()
